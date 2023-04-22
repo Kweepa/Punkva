@@ -1,0 +1,108 @@
+Constant Story "Punkva";
+Constant Headline "^Or Gormlaith and the Call of the Bog^";
+
+Include "Parser";
+Include "VerbLib";
+
+Global madecamp = 0;
+
+[ Initialise;
+    location = Road;
+    "^^^~Gormlaith! Slow down.~^~But we're nearly there!~^";
+];
+
+Object Road "Road"
+    with description
+    [;
+        print "You are walking with your Uncle Fergus on a dirt road at the foot of a wooded knoll, which rises to the east.";
+        if (~~madecamp)
+        {
+            print " The western sun glitters off the Svitava river, beyond which you can see the distant roofs of Blansko nestled among purple hills.^";
+        }
+        else
+        {
+            print " To the west lies the Svitava river.^";
+        }
+    ],
+    e_to
+    [;
+        if (madecamp)
+        {
+            return Knoll;
+        }
+        else
+        {
+            "It's dark in those trees.";
+        }
+    ],
+    w_to River,
+    has light;
+
+Object -> Fergus "Uncle Fergus"
+    with name "fergus" "uncle",
+    description
+        "You look up at your Uncle Fergus, past the red tunic under blue woollen robe, to see his kind, lively eyes surveying the path ahead.
+His hair is prematurely grey where his tonsure allows it.
+He has the air of a man who knows where he's going.",
+    found_in [; rtrue;],
+    has proper animate transparent;
+
+Object -> -> tonsure "tonsure"
+    with name "tonsure" "hair",
+    description "~I know it's frowned upon in Constantinople, but I much prefer this old Celtic style,~ says Fergus. You have to agree.",
+    has scenery;
+
+Object Knoll "Knoll"
+    with description
+        "You are wandering amongst mottled white trunks on a steep hill. Red beech leaves rustle underfoot. Bright morning light easily penetrates the yellow tree crowns.
+    ^~I'm sure the entrance is around here somewhere,~ says Fergus. The road is visible between the trees to the west.",
+    w_to Road,
+    n_to Clearing,
+    e_to Clearing,
+    s_to Clearing,
+    has light;
+
+Object Clearing "Clearing"
+    with description
+        "You are in a clearing amongst thick spruce. Blackberry bushes dot the edges of the clearing.
+    ^~The entrance must be around here somewhere,~ says Fergus.",
+    s_to Knoll,
+    e_to Ferns,
+    w_to Ferns,
+    n_to Ferns,
+    has light;
+
+Object Ferns "Ferns"
+    with description
+        "You are pushing through knee-high ferns between rough-barked linden. A small creature skitters away on dried leaves.",
+    w_to Clearing,
+    s_to Hollow,
+    n_to Clearing,
+    e_to Clearing,
+    has light;
+
+Object Hollow "Hollow"
+    with description
+        "You are scrambling over roots on a muddy path in a shallow hollow. Oak branches hang low over the path.",
+    w_to Knoll,
+    n_to Knoll,
+    s_to Knoll,
+    e_to Ferns,
+    has light;
+
+Object River "River"
+    with description
+        "Mist hangs over the river. The road is visible away to the east.",
+    e_to Road,
+    before
+    [;
+    Sleep:
+        if (~~madecamp)
+        {
+            madecamp = 1;
+            "You settle into your sleeping bag.";
+        }
+    ],
+    has light;
+
+Include "Grammar";
