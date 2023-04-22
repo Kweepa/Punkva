@@ -23,6 +23,10 @@ Object Road "Road"
         {
             print " To the west lies the Svitava river.^";
         }
+        if (amber hasnt moved && Knoll has visited)
+        {
+            print "Off to the south a trader has stopped his cart by the side of the road to give his drayhorse a rest. He waves you over.^";
+        }
     ],
     e_to
     [;
@@ -32,7 +36,12 @@ Object Road "Road"
         }
         else
         {
-            "It's dark in those trees.";
+            "~It's late and the woods are dark. We could disturb a wildcat. Let's find somewhere to camp and try again in the morning,~ says Fergus.
+            ^~Are there really wild cats around here?~
+            ^~And bears too.~
+            ^~I'm sure they're more scared of us than we are of them,~ you say, a little more bravely than you feel.
+            ^~Speak for yourself.~
+            ^You concede the point.";
         }
     ],
     w_to River,
@@ -104,5 +113,14 @@ Object River "River"
         }
     ],
     has light;
+
+Object SideOfRoad "Side of Road"
+    with description
+        "",
+    has light;
+
+Object amber "amber"
+    with name "amber",
+    description "A smooth chunk of amber.";
 
 Include "Grammar";
